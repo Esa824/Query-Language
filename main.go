@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	// Get Database name and Query
+	// Get Database name
 	fmt.Print("Database: ")
 	database := readLine()
 	database = strings.TrimSpace(database)
@@ -78,5 +78,28 @@ func goParser(db *sql.DB, query string) {
 	if strings.HasPrefix(query, "Delete Row in") {
 		words := strings.Fields(query)
 		functions.DeleteRow(db, words[4], words[3])
+	}
+	if strings.HasPrefix(query, "Update Row in") {
+		words := strings.Fields(query)
+		functions.UpdateRow(db, words[4], words[3], words[5:])
+	}
+	if query == "exit" {
+		os.Exit(0)
+		db.Close()
+	}
+	if strings.HasPrefix(query, "Delete Table") {
+		words := strings.Fields(query)
+		functions.DeleteTable(db, words[2:])
+	}
+	if strings.HasPrefix(query, "Create Table") {
+		functions.CreateTable(db, query)
+	}
+	if strings.HasPrefix(query, "List All Columns in") {
+		words := strings.Fields(query)
+		functions.GetAllColumnsInTable(db, words[4])
+	}
+	if strings.HasSuffix(query, "--sql") {
+		words := strings.Fields(query)
+		functions.ExecuteActualSQLCommand(db, strings.Join(words[:len(words)-1], " "))
 	}
 }
