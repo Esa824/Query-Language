@@ -13,7 +13,7 @@ First clone the project using
 ```bash
 $ git clone https://github.com/esa1234567/Query-Language.git`
 ```
-Then go into main.go at this line 23 replace admin with your psql User
+Then go into main.go at this line 23 replace admin with your psql User.
 Then build it using
 ``` bash
 $ go build .
